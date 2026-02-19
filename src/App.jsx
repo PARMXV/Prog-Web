@@ -96,7 +96,7 @@ const App = () => {
             <header className="app-header">
                 <div className="logo">
                     <FaLeaf className="logo-icon" />
-                    <h1>ZenFocus</h1>
+                    <h1>ZenFocus - Modo Estudio</h1>
                 </div>
 
                 <div className="stats-display">
