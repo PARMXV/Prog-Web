@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ info.title }}{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h2>{{ info.title }}</h2>
+        <p class="date-location"><span class="icon">📅</span> {{ info.date }} &nbsp;|&nbsp; <span class="icon">📍</span>
+            {{ info.location }}</p>
+        <p class="description">Join us for a day of innovation, learning, and networking with Google Cloud experts -
+            2026 Edition.</p>
+    </div>
+</section>
+
+<section id="schedule" class="schedule-section">
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Search talks, speakers, or categories..." aria-label="Search">
+        <div class="filter-group">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="Keynote">Keynote</button>
+            <button class="filter-btn" data-filter="AI/ML">AI/ML</button>
+            <button class="filter-btn" data-filter="Infrastructure">Infrastructure</button>
+            <button class="filter-btn" data-filter="Data Analytics">Data</button>
+            <button class="filter-btn" data-filter="Security">Security</button>
+            <button class="filter-btn" data-filter="App Dev">App Dev</button>
+        </div>
+    </div>
+
+    <div class="timeline" id="talksContainer">
+        {% for talk in talks %}
+        <div class="talk-card {{ 'break-card' if talk.category == 'Break' else '' }}"
+            data-category="{{ talk.category }}">
+            <div class="time-col">
+                <span class="time">{{ talk.time }}</span>
+                <span class="duration">{{ talk.duration }}</span>
+            </div>
+            <div class="content-col">
+                <div class="header-row">
+                    <span class="category-badge {{ talk.category | lower | replace('/', '-') }}">{{ talk.category
+                        }}</span>
+                    <h3 class="talk-title">{{ talk.title }}</h3>
+                </div>
+                <p class="talk-desc">{{ talk.description }}</p>
+                {% if talk.speakers %}
+                <div class="speakers">
+                    {% for speaker in talk.speakers %}
+                    <a href="{{ speaker.linkedin }}" target="_blank" class="speaker-link">
+                        <span class="speaker-name">{{ speaker.first }} {{ speaker.last }}</span>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div id="noResults" class="hidden">
+        <p>No talks found matching your search.</p>
+    </div>
+</section>
+{% endblock %}
